@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const PORT = 4000;
+require('dotenv').config()
 
 const http = require("http").Server(app);
 const cors = require("cors");
@@ -9,7 +10,7 @@ app.use(cors());
 
 const socketIO = require("socket.io")(http, {
   cors: {
-    origin: "http://10.6.165.86:3000",
+    origin: `http://${process.env.IP_ADDRESS}:3000`,
   },
 });
 
