@@ -1,15 +1,7 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const ChatBody = ({ messages }) => {
-  var [date, setDate] = useState(new Date());
-
-  useEffect(() => {
-    var timer = setInterval(() => setDate(new Date()), 1000);
-    return function cleanup() {
-      clearInterval(timer);
-    };
-  });
+const ChatBody = ({ messages, lastMessageRef }) => {
   const navigate = useNavigate();
   const handleLeaveChat = () => {
     localStorage.removeItem("userName");
@@ -42,8 +34,8 @@ const ChatBody = ({ messages }) => {
             <div className="message__chats" key={message.id}>
               <p>{message.name}</p>
               <div className="message__recipient">
-                {message.date}
                 <p>{message.text}</p>
+                {message.date}
               </div>
             </div>
           )
@@ -51,6 +43,7 @@ const ChatBody = ({ messages }) => {
         {/* <div className="message__status">
           <p>Someone is typing...</p>
         </div> */}
+        <div ref={lastMessageRef} />
       </div>
     </>
   );

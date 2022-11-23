@@ -9,7 +9,7 @@ app.use(cors());
 
 const socketIO = require("socket.io")(http, {
   cors: {
-    origin: "http://192.168.100.8:3000",
+    origin: "http://10.6.165.86:3000",
   },
 });
 
