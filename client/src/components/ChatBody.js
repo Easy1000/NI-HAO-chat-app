@@ -12,7 +12,7 @@ const ChatBody = ({ messages, lastMessageRef }) => {
   return (
     <>
       <header className="chat__mainHeader">
-        <p>NI HAO</p>
+        <p>NI HAO CHAT ROOM</p>
         <button className="leaveChat__btn" onClick={handleLeaveChat}>
           BYE BYE
         </button>
