@@ -15,12 +15,15 @@ const socketIO = require("socket.io")(http, {
 });
 
 let users = []
+let messages = []
 
 socketIO.on("connection", (socket) => {
   console.log(`⚡: ${socket.id} user just connected!`);
+  socketIO.emit('messageResponse', messages)
 
   socket.on("message", (data) => {
-    socketIO.emit('messageResponse', data)
+    messages.push(data)
+    socketIO.emit('messageResponse', messages)
     console.log(data)
   });
 
@@ -38,6 +41,7 @@ socketIO.on("connection", (socket) => {
 });
 
 app.get("/api", (req, res) => {
+  messages = []
   res.json({
     message: "Hello World",
   });

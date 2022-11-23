@@ -5,10 +5,11 @@ import ChatFooter from "./ChatFooter";
 
 const ChatPage = ({ socket }) => {
   const [messages, setMessages] = useState([]);
+  socket.on('messageResponse', (data) => setMessages(data))
   const lastMessageRef = useRef(null)
 
   useEffect(() => {
-    socket.on("messageResponse", (data) => setMessages([...messages, data]));
+    socket.on("messageResponse", (data) => setMessages(data));
   }, [socket, messages]);
 
   useEffect(() => {
