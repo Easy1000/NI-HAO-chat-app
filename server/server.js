@@ -10,7 +10,7 @@ app.use(cors());
 
 const socketIO = require("socket.io")(http, {
   cors: {
-    origin: `http://${process.env.IP_ADDRESS}:3000`,
+    origin: `http://${process.env.REACT_APP_IP_ADDRESS}:3000`,
   },
 });
 
