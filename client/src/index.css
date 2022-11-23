@@ -52,15 +52,15 @@
 .chat__sidebar {
     height: 100%;
     background-color: #082032;
-    flex: 0.2;
+    flex: 0.1;
     padding: 20px;
-    border-right: 1px solid #fdfdfd;
+    border-right: 0px solid #fdfdfd;
     color: white;
 }
 
 .chat__main {
     height: 100%;
-    flex: 0.8;
+    flex: 0.9;
 }
 
 .chat__header {

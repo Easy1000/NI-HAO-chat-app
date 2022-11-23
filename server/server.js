@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const PORT = 4000;
-require('dotenv').config()
+require("dotenv").config();
 
 const http = require("http").Server(app);
 const cors = require("cors");
@@ -14,34 +14,34 @@ const socketIO = require("socket.io")(http, {
   },
 });
 
-let users = []
-let messages = []
+let users = [];
+let messages = [];
 
 socketIO.on("connection", (socket) => {
   console.log(`⚡: ${socket.id} user just connected!`);
-  socketIO.emit('messageResponse', messages)
 
   socket.on("message", (data) => {
-    messages.push(data)
-    socketIO.emit('messageResponse', messages)
-    console.log(data)
+    messages.push(data);
+    socketIO.emit("messageResponse", messages);
+    console.log(data);
   });
 
-  socket.on('newUser', (data) => {
-    users.push(data)
-    socketIO.emit('newUserResponse', users)
-  })
+  socket.on("newUser", (data) => {
+    users.push(data);
+    socketIO.emit("newUserResponse", users);
+    socketIO.emit("messageResponse", messages);
+  });
 
   socket.on("disconnect", () => {
     console.log("🔥: A user disconnected");
-    users = users.filter((user) => user.socketID !== socket.id)
-    socketIO.emit('newUserResponse', users)
-    socket.disconnect()
+    users = users.filter((user) => user.socketID !== socket.id);
+    socketIO.emit("newUserResponse", users);
+    socket.disconnect();
   });
 });
 
 app.get("/api", (req, res) => {
-  messages = []
+  messages = [];
   res.json({
     message: "Hello World",
   });
