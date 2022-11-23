@@ -5,16 +5,16 @@ import ChatFooter from "./ChatFooter";
 
 const ChatPage = ({ socket }) => {
   const [messages, setMessages] = useState([]);
-  socket.on('messageResponse', (data) => setMessages(data))
-  const lastMessageRef = useRef(null)
+  socket.on("messageResponse", (data) => setMessages(data));
+  const lastMessageRef = useRef(null);
 
   useEffect(() => {
     socket.on("messageResponse", (data) => setMessages(data));
   }, [socket, messages]);
 
   useEffect(() => {
-    lastMessageRef.current?.scrollIntoView({behavior: 'smooth'})
-  }, [messages])
+    lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   return (
     <div className="chat">

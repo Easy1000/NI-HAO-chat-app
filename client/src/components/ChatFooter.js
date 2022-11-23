@@ -13,7 +13,7 @@ const ChatFooter = ({ socket }) => {
         socketID: socket.id,
         date: date.toLocaleTimeString(),
       });
-      setMessage('')
+      setMessage("");
     }
   };
 
