@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 
 const ChatFooter = ({ socket }) => {
   const [message, setMessage] = useState("");
+  const messageInput = useRef()
   const handleSendMessage = (e) => {
     const date = new Date();
     e.preventDefault();
@@ -17,10 +18,16 @@ const ChatFooter = ({ socket }) => {
     }
   };
 
+  useEffect(() => {
+    messageInput.current.focus()
+  }, [])
+  
+
   return (
     <div className="chat__footer">
       <form className="form" onSubmit={handleSendMessage}>
         <input
+          ref={messageInput}
           type="text"
           placeholder="Write message"
           className="message"
