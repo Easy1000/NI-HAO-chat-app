@@ -2,7 +2,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const ChatBody = ({ messages, lastMessageRef }) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // used to navigate to other page
+
+  // disconnect user and navigate to sign in page, triggered after user leave chat room
   const handleLeaveChat = () => {
     localStorage.removeItem("userName");
     navigate("/");
@@ -19,7 +21,6 @@ const ChatBody = ({ messages, lastMessageRef }) => {
       </header>
 
       {/*This shows messages sent from you*/}
-
       <div className="message__container">
         {messages.map((message) =>
           message.name === localStorage.getItem("userName") ? (
@@ -40,7 +41,9 @@ const ChatBody = ({ messages, lastMessageRef }) => {
             </div>
           )
         )}
-        <div ref={lastMessageRef} />
+
+        {/* used to scroll the window to bottom */}
+        <div ref={lastMessageRef} /> 
       </div>
     </>
   );

@@ -1,8 +1,15 @@
 import React, { useRef, useState, useEffect } from "react";
 
 const ChatFooter = ({ socket }) => {
-  const [message, setMessage] = useState("");
-  const messageInput = useRef()
+  const [message, setMessage] = useState(""); // message variable that will be sent to the server
+
+  // used to focus on the text box upon mounting the component
+  const messageInput = useRef();
+  useEffect(() => {
+    messageInput.current.focus();
+  }, []);
+
+  // the function that sends the message to the server
   const handleSendMessage = (e) => {
     const date = new Date();
     e.preventDefault();
@@ -17,12 +24,6 @@ const ChatFooter = ({ socket }) => {
       setMessage("");
     }
   };
-
-  useEffect(() => {
-    messageInput.current.focus()
-  }, [])
-  
-
   return (
     <div className="chat__footer">
       <form className="form" onSubmit={handleSendMessage}>
