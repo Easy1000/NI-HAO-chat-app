@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const ChatBody = ({ messages, lastMessageRef }) => {
+const ChatBody = ({ messages, lastMessageRef, buddy }) => {
   const navigate = useNavigate(); // used to navigate to other page
 
   // disconnect user and navigate to sign in page, triggered after user leave chat room
@@ -14,7 +14,7 @@ const ChatBody = ({ messages, lastMessageRef }) => {
   return (
     <>
       <header className="chat__mainHeader">
-        <p>NI HAO CHAT ROOM</p>
+        <p>{buddy}</p>
         <button className="leaveChat__btn" onClick={handleLeaveChat}>
           BYE BYE
         </button>

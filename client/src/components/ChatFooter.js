@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 
-const ChatFooter = ({ socket }) => {
+const ChatFooter = ({ socket, buddy }) => {
   const [message, setMessage] = useState(""); // message variable that will be sent to the server
 
   // used to focus on the text box upon mounting the component
@@ -20,6 +20,7 @@ const ChatFooter = ({ socket }) => {
         id: `${socket.id}${Math.random()}`,
         socketID: socket.id,
         date: date.toLocaleTimeString(),
+        buddy: buddy
       });
       setMessage("");
     }

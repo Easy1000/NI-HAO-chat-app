@@ -11,20 +11,51 @@ app.use(cors());
 
 const socketIO = require("socket.io")(http, {
   cors: {
-    origin: `http://${process.env.REACT_APP_IP_ADDRESS}:3000`, // connect to client server and only receive from the given ip address and port
+    origin: true, // connect to client server and receive from any client
   },
 });
 
 let users = []; // array of users
 let messages = []; // array of all the messages sent from clients
 
-socketIO.on("connection", (socket) => { // open socket for connection
+socketIO.on("connection", (socket) => {
+  // open socket for connection
   console.log(`⚡: ${socket.id} user just connected!`); // log clients that are connected
 
+  socket.on("newBuddy", (data) => {
+    for(const room of socket.rooms) socket.leave(room)
+    socket.join(`${data.name} ${data.buddy}`);
+    socketIO.in(`${data.name} ${data.buddy}`).emit(
+      "messageResponse",
+      messages.filter(
+        (message) =>
+          (message.name === data.name && message.buddy === data.buddy) ||
+          (message.name === data.buddy && message.buddy === data.name)
+      )
+    );
+    socket.leave(`${data.name} ${data.buddy}`);
+  });
+
   // receive message and add it to messages array
-  socket.on("message", (data) => { 
+  socket.on("message", (data) => {
+    socket.join(`${data.name} ${data.buddy}`);
     messages.push(data);
-    socketIO.emit("messageResponse", messages);
+    // socketIO.emit("messageResponse", messages);
+    socketIO
+      .in(`${data.name} ${data.buddy}`)
+      .in(`${data.buddy} ${data.name}`)
+      .emit(
+        "messageResponse",
+        messages.filter(
+          (message) =>
+            (message.name === data.name && message.buddy === data.buddy) ||
+            (message.name === data.buddy && message.buddy === data.name)
+        )
+      );
+    console.log(socket.rooms);
+    // socket.leave(`${data.name} ${data.buddy}`);
+    console.log(socket.rooms);
+    // for(const room of socket.rooms) console.log(room)
     console.log(data);
   });
 
@@ -32,7 +63,7 @@ socketIO.on("connection", (socket) => { // open socket for connection
   socket.on("newUser", (data) => {
     users.push(data);
     socketIO.emit("newUserResponse", users);
-    socketIO.emit("messageResponse", messages);
+    // socketIO.emit("messageResponse", messages);
   });
 
   // event listener when a user is disconnected
