@@ -11,18 +11,22 @@ app.use(cors());
 
 const socketIO = require("socket.io")(http, {
   cors: {
-    origin: `http://${process.env.REACT_APP_IP_ADDRESS}:3000`, // connect to client server and only receive from the given ip address and port
+    origin: [
+      `http://${process.env.REACT_APP_IP_ADDRESS}:3000`,
+      `http://chat.${process.env.REACT_APP_IP_ADDRESS}`,
+    ], // connect to client server and only receive from the given ip address and port
   },
 });
 
 let users = []; // array of users
 let messages = []; // array of all the messages sent from clients
 
-socketIO.on("connection", (socket) => { // open socket for connection
+socketIO.on("connection", (socket) => {
+  // open socket for connection
   console.log(`⚡: ${socket.id} user just connected!`); // log clients that are connected
 
   // receive message and add it to messages array
-  socket.on("message", (data) => { 
+  socket.on("message", (data) => {
     messages.push(data);
     socketIO.emit("messageResponse", messages);
     console.log(data);
@@ -52,6 +56,6 @@ app.get("/api", (req, res) => {
   });
 });
 
-http.listen(PORT, () => {
+http.listen(PORT, "0.0.0.0", () => {
   console.log(`Server is listening on ${PORT}`);
 });

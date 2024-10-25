@@ -1,0 +1,20 @@
+services:
+  react-app:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - express-app
+    environment:
+      - REACT_APP_IP_ADDRESS=localhost
+
+  express-app:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    environment:
+      - REACT_APP_IP_ADDRESS=localhost
