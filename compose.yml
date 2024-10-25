@@ -8,7 +8,7 @@ services:
     depends_on:
       - express-app
     environment:
-      - REACT_APP_IP_ADDRESS=localhost
+      - REACT_APP_IP_ADDRESS=izaazrakbar.site
 
   express-app:
     build:
@@ -17,4 +17,4 @@ services:
     ports:
       - "4000:4000"
     environment:
-      - REACT_APP_IP_ADDRESS=localhost
+      - REACT_APP_IP_ADDRESS=izaazrakbar.site
